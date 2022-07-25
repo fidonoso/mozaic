@@ -1,0 +1,73 @@
+<div class="container text-center">
+  <div class="row">
+    <div class="col-8 my-3 p-3 mx-auto border">
+      <div class="d-flex justify-content-evenly" id="caja_accion">
+      {{>btn_admin}}
+      {{>btn_cont}}
+      {{>btn_prog}}
+      </div>
+      {{#if habilitado_prog}}
+      {{>curso_enable}}
+      {{else}}
+      {{>curso_disabled}} 
+      {{/if}}
+    </div>
+  </div>
+</div>
+<script>
+  
+  let chesu=document.querySelectorAll('#caja_accion form  input[name="checksu"]')
+chesu.forEach(el=>{
+  el.addEventListener('change', async(e)=>{
+      
+      console.log(e.target.defaultValue)
+      let payload={
+          id: parseInt(e.target.id.replace('check_', '')),
+          estado: e.target.checked 
+      }
+      const llamado=await fetch('/setstatecarreradocente', {
+          method: 'PUT',
+          headers: { 'Content-type': 'application/json'},
+          body: JSON.stringify(payload)
+      })
+      const res=await llamado.json();
+      console.log(res)
+      window.location.reload()
+  })
+})
+
+//habilitar modificar notas 
+const modificar=(id)=>{
+    let notas=[document.getElementById(`${id}_1`), document.getElementById(`${id}_2`), document.getElementById(`${id}_3`)]
+    notas.forEach(inp=>{
+        inp.disabled=false
+    })
+}
+
+//guardar notas
+    const guardado=async(id)=>{
+        let nota1=document.getElementById(id+"_1").value
+        let nota2=document.getElementById(id+"_2").value
+        let nota3=document.getElementById(id+"_3").value
+
+    let payload={ 
+        id,
+        nota1: parseInt(nota1)?parseInt(nota1):0,
+        nota2: parseInt(nota2)?parseInt(nota2):0,
+        nota3: parseInt(nota3)?parseInt(nota3):0,
+        }
+    console.log(payload)
+        let sol=await fetch('/updatenote',{
+            method: 'post',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+        })
+        let res= await sol.json()
+        if(res){
+            alert('Guardado con éxito')
+        }else{
+            alert('Algo salió mal en el servidor')
+        }
+    window.location.reload()
+    }
+</script>

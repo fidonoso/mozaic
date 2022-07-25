@@ -1,0 +1,16 @@
+{{#if success_msg }}
+  <div class="alert alert-success alert-dismissible fade show  sticky-top" role="alert" data-idf="messages1">
+    {{success_msg}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+  </button>
+</div>
+{{/if}}
+
+{{#if errors_msg }}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" data-idf="errors1">
+    {{error_msg}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true" ></span>
+  </button>
+</div>
+{{/if}}

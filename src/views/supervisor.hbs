@@ -1,0 +1,216 @@
+<div class="container">
+    <div class="row">
+<div class="col-2 my-3 p-1 border">
+    <!--registro de nuevo alumno--->
+    <h4 class="my-2">Registrar Alumno</h4>
+    <form class="" action="/createalumno" method="post">
+<div class="my-3 p-2 text-start d-flex flex-column">
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Administración">
+        <label class="form-check-label" for="inlineRadio1">Administración</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Contabilidad">
+        <label class="form-check-label" for="inlineRadio2">Contabilidad</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Programación" >
+        <label class="form-check-label" for="inlineRadio3">Programación</label>
+    </div>
+
+</div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" id="nombre_supervior" name="nombre" placeholder="Nombre" required>
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="apellido_supervior" name="apellido" placeholder="Apellido" required>
+        </div>
+        <div class="mb-3">
+            <input type="email" class="form-control" id="correo_supervior" name="correo" placeholder="Correo electrónico"  required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="contraseña_supervior" name="password"  placeholder="Contraseña" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="contraseña2_supervior" name="password2" placeholder="Confirmar contraseña"  required>
+        </div>        
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary my-2">Registrar</button>
+        </div>
+    </form>
+</div>
+<div class="col-9 my-3 p-3 mx-1 border">
+<div class="d-flex justify-content-evenly" id="caja_accion">
+<form class="pt-2 pb-2 ms-2" action="/getalumnos" method="post" id="form1">
+    <div class="form-check form-switch">
+
+        <input class="form-check-input" type="checkbox" value="Administracion" name="checksu" id="check_1">
+        <input class="form-control d-none" type="text" value="Administracion" id="administracion" name="carrera">
+        <label class="form-check-label" for="checkAdministracion" id="lbl_1">Cerrar curso</label>
+    </div>
+    <button class="btn btn-{{#if btnADM}}{{btnADM}}{{else}}secondary{{/if}}" type="submit">Administración</button>
+</form>
+<form class="pt-2 pb-2 ms-3" action="/getalumnos" method="post" id="form3">
+    <div class="form-check form-switch">
+   <input class="form-check-input" type="checkbox" value="Contabilidad" name="checksu" id="check_3">   
+
+  <input class="form-control d-none" type="text" value="Contabilidad" id="contabilidad" name="carrera">
+  <label class="form-check-label" for="checkContabilidad" id="lbl_3">Cerrar curso</label>
+</div>
+    <button class="btn btn-{{#if btnCon}}{{btnCon}}{{else}}secondary{{/if}}" type="submit" >Contabilidad</button>
+</form>
+
+<form class="pt-2 pb-2 ms-3" action="/getalumnos" method="post" id="form2">
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox"  value="Programacion" id="check_2" name="checksu">
+        <input class="form-control d-none" type="text" value="Programacion" id="programacion" name="carrera">
+        <label class="form-check-label" for="checkProgramacion" id="lbl_2">Cerrar curso</label>
+        
+</div>
+    <button class="btn btn-{{#if btnProg}}{{btnProg}}{{else}}secondary{{/if}}"  type="submit">Programación</button>
+</form>
+</div>
+<table class="table">
+  <thead>
+  
+    <tr>
+      <th class="fs-6">#</th>
+      <th class="fs-6">Carrera</th>
+      <th class="fs-6">Nombre</th>
+      <th class="fs-6">Apellido</th>
+      <th class="fs-6">Nota 1</th>
+      <th class="fs-6">Nota 2</th>
+      <th class="fs-6">Nota 3</th>
+      <th class="fs-6">Promedio</th>
+      <th class="fs-6">Resultado</th>
+      <th class="fs-6 guardador">Guardar</th>
+      <th class="fs-6 ">Modificar</th>
+      
+      
+    </tr> 
+    
+  </thead>
+  <tbody class="table-striped table-hover" id="datos">
+      {{#each curso}}
+    <tr>
+      <th scope="row">{{inc @index}}</th>
+      <th scope="row">{{this.nombre_carrera}}</th>
+      <td class="" style="width: 110px;">{{this.nombre}}</td>
+      <td class="" style="width: 110px;">{{this.apellido}}</td>
+      <td> <input type=text value="{{this.nota1}}" id="{{this.id}}_1"  disabled class="w-50 {{colorsolo nota1}} text-center"></td>
+      <td> <input type=text value="{{this.nota2}}" id="{{this.id}}_2"  disabled  class="w-50 {{colorsolo nota2}} text-center"></td>
+      <td> <input type=text value="{{this.nota3}}" id="{{this.id}}_3"  disabled class="w-50 {{colorsolo nota3}} text-center"></td>
+      <td class={{color nota1 nota2 nota3}}>{{promedio this.nota1 this.nota2 this.nota3}}</td>
+      <td class={{color nota1 nota2 nota3}}>{{resultado this.nota1 this.nota2 this.nota3}}</td>
+    <td class="text-center guardador" style="cursor: pointer;" onclick="guardado('{{this.id}}')"><i class="fa-solid fa-floppy-disk" ></i></td>
+    <td class="text-center " style="cursor: pointer;"  onclick="modificar('{{this.id}}');"><i class="fa-solid fa-pen-to-square"></i></td> 
+    </tr>
+    {{else}}
+
+       <tr>
+            <td colspan="8" class="fs-2"> No hay alumnos registrados en este curso</td>
+        </tr>
+    {{/each}}
+ 
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+
+<script>
+ 
+    let chesu=document.querySelectorAll('#caja_accion form  input[name="checksu"]')
+
+    chesu.forEach(el=>{
+        el.addEventListener('change', async(e)=>{
+            
+           console.log(e)
+            let payload={
+                id: parseInt(e.target.id.replace('check_', '')),
+                estado: e.target.checked 
+            }
+            const llamado=await fetch('/setstatecarrera', {
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json'},
+                body: JSON.stringify(payload)
+            })
+            const res=await llamado.json();
+            console.log(res)
+            if(res){
+               res.forEach(el=>{
+                let lbl= document.getElementById( `lbl_${el.id}`)
+                
+                if(parseInt(el.estado)){
+                    lbl.innerHTML="Abierto"
+                }else{
+                    lbl.innerHTML="Cerrado"
+                }
+
+               })
+            }else{
+                alert('Algo salió mal...recarga la pagina y vuelve a intentarlo')
+            }
+        })
+    })
+    console.log(chesu)
+  
+
+    console.log('La página ha terminado de cargarse!!');
+
+   const estadoscursos=(async()=>{
+        const llamado=await fetch('/getcarreras');
+        const res= await llamado.json()
+        console.log('res==>',res)
+        res.forEach(el=>{          
+            let close=!!parseInt(el.estado)
+            document.getElementById(`check_${el.id}`).checked=close
+            let lbl= document.getElementById( `lbl_${el.id}`)
+            if(parseInt(el.estado)){
+                lbl.innerHTML="Abierto"
+            }else{
+                lbl.innerHTML="Cerrado"
+            }
+        })
+  })()
+ 
+    let formCon=document.querySelector('#formCon')
+
+
+//guardar notas
+    const guardado=async(id)=>{
+        let nota1=document.getElementById(id+"_1").value
+        let nota2=document.getElementById(id+"_2").value
+        let nota3=document.getElementById(id+"_3").value
+
+    let payload={ 
+        id,
+        nota1: parseInt(nota1)?parseInt(nota1):0,
+        nota2: parseInt(nota2)?parseInt(nota2):0,
+        nota3: parseInt(nota3)?parseInt(nota3):0,
+        }
+    console.log(payload)
+        let sol=await fetch('/updatenote',{
+            method: 'post',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+        })
+        let res= await sol.json()
+        if(res){
+            alert('Guardado con éxito')
+        }else{
+            alert('Algo salió mal en el servidor')
+        }
+    }
+
+//habilitar modificar notas 
+const modificar=(id)=>{
+    let notas=[document.getElementById(`${id}_1`), document.getElementById(`${id}_2`), document.getElementById(`${id}_3`)]
+    notas.forEach(inp=>{
+        inp.disabled=false
+    })
+}
+
+</script>

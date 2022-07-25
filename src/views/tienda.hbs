@@ -1,0 +1,21 @@
+  <div class="container d-flex">
+
+    {{#each productos}}
+    <div class="card mx-2 my-2" style="width: 13rem;">
+        <img src="img/products/{{this.url_img}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{this.producto}}</h5>
+            <p class="card-text my-1">{{this.descripcion}}</p>
+            <p class="card-text my-0">Stock: {{this.stock}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text my-0">Precio: {{precio this.precio}} </p>
+                <i class="fa-solid fa-cart-shopping"></i>
+            <a href="#" class="btn btn-primary d-none">Go somewhere</a>
+
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <h2>No hay productos agregados</h2>
+    {{/each}}
+</div>

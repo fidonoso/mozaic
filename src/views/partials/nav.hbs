@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg container " id="barra_nav">
+  <div class="container-fluid">
+ <a href="/">
+      <p class="navbar-brand p-0 text-white">Mozaic SPA</p>
+
+ </a>
+      
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse position-relative" id="navbarSupportedContent">
+        
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+     
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">{{rol}}</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Menu        {{user.nombre}} {{user.apellido}}</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+         
+           {{#if user}}
+            <li><a class="dropdown-item" href="/productos">Modificar</a></li>
+            <li><a class="dropdown-item" href="/logout">Salir</a></li>
+            {{else}}
+           <li><a class="dropdown-item" href="/login">Login</a></li>
+            {{/if}}
+          </ul>
+        </li>
+     
+      </ul>
+ 
+    </div>
+  </div>
+</nav>

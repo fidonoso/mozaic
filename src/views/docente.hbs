@@ -1,0 +1,87 @@
+<div class="container text-center">
+    <div class="row">
+
+<div class="col-8 my-3 p-3 mx-auto border">
+<div class="d-flex justify-content-evenly" id="caja_accion">
+
+  <!---form ADministración----->
+{{>btn_admin}}
+<!---form Contabilidad----->
+{{>btn_cont}}
+<!---form Programación----->
+{{>btn_prog}}
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th class="fs-6"></th>
+      <th class="fs-6">Nombre</th>
+      <th class="fs-6">Apellido</th>
+      <th class="fs-6">Nota 1</th>
+      <th class="fs-6">Nota 2</th>
+      <th class="fs-6">Nota 3</th>
+      <th class="fs-6">Promedio</th>
+      <th class="fs-6">Resultado</th>
+    </tr> 
+    
+  </thead>
+  <tbody class="table-striped table-hover" id="datos">
+      {{#each curso}}
+    <tr>
+      <th scope="row">{{inc @index}}</th>
+      <td class="" style="width: 110px;">{{this.nombre}}</td>
+      <td class="" style="width: 110px;">{{this.apellido}}</td>
+      <td> <input type=text value="{{this.nota1}}" id="{{this.id}}_1"  disabled class="w-50 {{colorsolo nota1}} text-center"></td>
+      <td> <input type=text value="{{this.nota2}}" id="{{this.id}}_2"  disabled  class="w-50 {{colorsolo nota2}} text-center"></td>
+      <td> <input type=text value="{{this.nota3}}" id="{{this.id}}_3"  disabled class="w-50 {{colorsolo nota3}} text-center"></td>
+      <td class={{color nota1 nota2 nota3}}>{{promedio this.nota1 this.nota2 this.nota3}}</td>
+      <td class={{color nota1 nota2 nota3}}>{{resultado this.nota1 this.nota2 this.nota3}}</td>
+    
+    </tr>
+    {{else}}
+
+       <tr>
+            <td colspan="8" class="fs-2"> No hay alumnos registrados en este curso</td>
+        </tr>
+    {{/each}}
+ 
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+
+<script>
+
+     let chesu=document.querySelectorAll('#caja_accion form  input[name="checksu"]')
+
+chesu.forEach(el=>{
+  el.addEventListener('change', async(e)=>{
+      
+    console.log(e)
+    let payload={
+      id: parseInt(e.target.id.replace('check_', '')),
+      estado: e.target.checked 
+    }
+    const llamado=await fetch('/setstatecarreradocente', {
+      method: 'PUT',
+      headers: { 'Content-type': 'application/json'},
+      body: JSON.stringify(payload)
+    })
+    const res=await llamado.json();
+    console.log(res)
+    if(res){
+      res.forEach(el=>{
+        let lbl= document.getElementById( `lbl_${el.id}`)
+        if(parseInt(el.estado)){
+          lbl.innerHTML="Abierto"
+        }else{
+          lbl.innerHTML="Cerrado"
+        }
+      })
+    }else{
+          alert('Algo salió mal...recarga la pagina y vuelve a intentarlo')
+    }
+  })
+})
+</script>
